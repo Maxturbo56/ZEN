@@ -3,36 +3,18 @@
 class Osoba : public ZEN{
 };
 
-class Konj : public ZEN{
-};
-
-class Stolica : public ZEN{ 
-};
-
 int main()
 {
-    Osoba osoba;
-    Konj konj;
-    Stolica stolica;
+    ZEN_Base zen_base;
+    ZEN_Container z;
 
-    osoba.set_ZEN_Name("Kemo");
-    konj.set_ZEN_Name("Konjo");
-    stolica.set_ZEN_Name("Medo");
-
-    ZEN_Container zec;
-
-    zec.Add_To_ZEN_Container(osoba);
-    zec.Add_To_ZEN_Container(konj);
-    zec.Add_To_ZEN_Container(stolica);
-
-    zec.Read_ZEN_Container();
-
-    zec.Remove_From_ZEN_Container_With_Name("Medo");
-    zec.Read_ZEN_Container();
-
-    ZEN_File file;
-
-    file.Overwrite_ZEN_File("main.txt", "ovo je recenica");
-
+    Osoba o;
+    o.set_ZEN_Name("Osoba");
+    o.add_attribute_of_ZEN("Ime : Kemo");
+    o.add_attribute_of_ZEN("Godine : 22");
+    o.add_attribute_of_ZEN("Boja Ociju : Zelena");
+    zen_base.Write(o);
+    zen_base.Read_To_ZEN_Container(z, o);
+    z.Read_ZEN_Container();
     return 0;
 }

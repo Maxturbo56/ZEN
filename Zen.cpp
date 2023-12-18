@@ -4,6 +4,46 @@
 //   ZEN OBJECT   //
 // -------------  //
 
+void ZEN::clear_Attributes_Of_ZEN()
+{
+    this->attributes_of_ZEN.clear();
+}
+
+std::string ZEN::get_Attribute_At_Index(int n)
+{
+    std::string temp;
+    temp = this->attributes_of_ZEN[n];
+    return temp;
+}
+
+void ZEN::add_attribute_of_ZEN(std::string s)
+{
+    this->attributes_of_ZEN.push_back(s);
+}
+
+void ZEN::remove_attribute_of_ZEN(std::string s)
+{
+    while(this->attributes_of_ZEN.back() == s)
+    {
+        this->attributes_of_ZEN.pop_back();
+    }
+
+    for(int i = 0; i < this->attributes_of_ZEN.size(); i++)
+    {
+        if(this->attributes_of_ZEN[i] == s)
+        {
+            this->attributes_of_ZEN[i] = attributes_of_ZEN.back();
+            attributes_of_ZEN.pop_back();
+            i = 0;   
+        }
+    }
+}
+
+int ZEN::attribute_SIZE()
+{
+    return this->attributes_of_ZEN.size();
+}
+
 ZEN::ZEN(std::string name, int value)
 {
     this->name_of_ZEN = name;
@@ -54,7 +94,21 @@ void ZEN_Container::Read_ZEN_Container()
         std::cout<<"ZEN CONTAINER CONTENTS : "<<std::endl<<std::endl;
         for (int i = 0; i < this->ZEN_Vec.size(); i++)
         {
-            std::cout<<i<<". "<<ZEN_Vec[i].get_ZEN_Name()<<" : "<<ZEN_Vec[i].get_ZEN_Value()<<std::endl;
+            if(ZEN_Vec[i].attribute_SIZE() > 0)
+            {
+                std::cout<<"#---------------------#"<<std::endl;
+                std::cout<<i<<". "<<ZEN_Vec[i].get_ZEN_Name()<<" : "<<ZEN_Vec[i].get_ZEN_Value()<<std::endl;
+                std::cout<<"With Attributes : \n\n";
+                for(int j = 0; j < ZEN_Vec[i].attribute_SIZE(); j++)
+                {
+                    std::cout<<j + 1<<".  "<<ZEN_Vec[i].get_Attribute_At_Index(j)<<"\n";
+                }
+                std::cout<<"#---------------------#"<<std::endl<<std::endl;
+            }
+            else
+            {
+                std::cout<<i<<". "<<ZEN_Vec[i].get_ZEN_Name()<<" : "<<ZEN_Vec[i].get_ZEN_Value()<<std::endl;
+            }
         }
         std::cout<<"-------------------------------------------------------"<<std::endl;
     }
@@ -271,13 +325,53 @@ void ZEN_File::Read_To_String(std::string file_To_Open, std::string &s)
     this->file_Output.close();
 }
 
-/*void ZEN_Base::Read_To_Vector(std::string file_To_Open, std::vector <std::string> &s)
+void ZEN_File::Read_To_Vector(std::string open_what, std::vector <std::string> &vec)
 {
     std::string line;
-    this->file_Output.open(file_To_Open, std::ios::out);
+    this->file_Output.open(open_what, std::ios::out);
     while(getline(file_Output, line))
     {
-        s.push_back(line);
+        vec.push_back(line);
     }
     this->file_Output.close();
-}*/
+}
+
+void ZEN_Base::Write(ZEN z)
+{
+    //NAME OF FILE
+    std::string temp;
+    temp = z.get_ZEN_Name();
+    temp += ".txt";
+
+    std::string boyo = "";
+    for(int i = 0; i < z.attribute_SIZE(); i++)
+    {
+        boyo += z.get_Attribute_At_Index(i) + "\n";
+    }
+    boyo += "#";
+    boyo += "\n";
+
+    this->Write_ZEN_File(temp, boyo);
+}
+
+void ZEN_Base::Read_To_ZEN_Container(ZEN_Container &z, ZEN object)
+{
+    std::vector <std::string> lines;
+    std::string what_to_open;
+    what_to_open += object.get_ZEN_Name() + ".txt";
+    this->Read_To_Vector(what_to_open, lines);
+    ZEN temp;
+    temp.set_ZEN_Name(object.get_ZEN_Name());
+    for(int i = 0; i < lines.size(); i++)
+    {
+        if(lines[i] != "#")
+        {
+            temp.add_attribute_of_ZEN(lines[i]);
+        }
+        else
+        {
+            z.Add_To_ZEN_Container(temp);
+            temp.clear_Attributes_Of_ZEN();
+        }
+    }   
+}

@@ -1,0 +1,44 @@
+OVO
+JE
+OSOBA
+#
+OVO
+JE
+OSOBA
+#
+OVO
+JE
+OSOBA
+#
+OVO
+JE
+OSOBA
+#
+OVO
+JE
+OSOBA
+#
+OVO
+JE
+OSOBA
+#
+OVO
+JE
+OSOBA
+#
+OVO
+JE
+OSOBA
+#
+OVO
+JE
+OSOBA
+#
+OVO
+JE
+OSOBA
+#
+Ime : Kemo
+Godine : 22
+Boja Ociju : Zelena
+#
