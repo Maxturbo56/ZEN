@@ -361,7 +361,10 @@ void ZEN_Base::Read_To_ZEN_Container(ZEN_Container &z, ZEN object)
     what_to_open += object.get_ZEN_Name() + ".txt";
     this->Read_To_Vector(what_to_open, lines);
     ZEN temp;
+
     temp.set_ZEN_Name(object.get_ZEN_Name());
+    temp.set_ZEN_Value(object.get_ZEN_Value());
+    
     for(int i = 0; i < lines.size(); i++)
     {
         if(lines[i] != "#")
