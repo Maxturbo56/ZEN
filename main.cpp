@@ -10,6 +10,7 @@ int main()
 {
     ZEN_Base zen_base;
     ZEN_Container z;
+    cout << "edvoon";
 
     Osoba o;
     o.set_ZEN_Name("Osoba");
